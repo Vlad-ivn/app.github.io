@@ -6,7 +6,7 @@ document.getElementById('dataForm').addEventListener('submit', function(event) {
   var app2Value = document.getElementById('app2').value;
 
   // Завантажуємо шаблон docx з GitHub
-  fetch('https://raw.githubusercontent.com/Vlad-ivn/app.github.io/main/prob1.docx')
+  fetch('https://raw.githubusercontent.com/Vlad-ivn/app.github.io/main/2.docx')
     .then(response => response.arrayBuffer())
     .then(templateData => {
       // Створюємо новий ZIP архів
