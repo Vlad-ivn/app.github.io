@@ -21,10 +21,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
   <script>
     function generateDocument() {
+      // Отримуємо значення з інпутів
       var input1Value = document.getElementById('input1').value;
       var input2Value = document.getElementById('input2').value;
 
-      fetch('https://raw.githubusercontent.com/Vlad-ivn/app.github.io/main/2.docx')
+      // Перевіряємо, чи передані дані з інпутів
+      console.log("Значення input1:", input1Value);
+      console.log("Значення input2:", input2Value);
+
+      // Перевіряємо, чи інпути не пусті
+      if (input1Value.trim() === "" || input2Value.trim() === "") {
+        alert("Будь ласка, заповніть обидва поля вводу");
+        return;
+      }
+
+      // Виконуємо подальші дії тільки якщо дані передані коректно
+      fetch('шлях_до_шаблону_документа.docx')
         .then(response => response.arrayBuffer())
         .then(templateData => {
           var zip = new JSZip();
@@ -54,3 +66,4 @@
   </script>
 </body>
 </html>
+
