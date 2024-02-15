@@ -28,67 +28,7 @@
         return;
       }
 
-        <!DOCTYPE html>
-<html lang="uk">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Генератор документів</title>
-</head>
-<body>
-  <h1>Генератор документів</h1>
-  <form id="dataForm">
-    <label for="input1">Значення для input1:</label>
-    <input type="text" id="input1" name="input1" required><br><br>
-
-    <label for="input2">Значення для input2:</label>
-    <input type="text" id="input2" name="input2" required><br><br>
-
-    <button type="button" onclick="generateDocument()">Створити документ</button>
-  </form>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
-  <script>
-    function generateDocument() {
-      var input1Value = document.getElementById('input1').value;
-      var input2Value = document.getElementById('input2').value;
-
-      if (input1Value.trim() === "" || input2Value.trim() === "") {
-        alert("Будь ласка, заповніть обидва поля вводу");
-        return;
-      }
-
-        fetch('https://raw.githubusercontent.com/Vlad-ivn/app.github.io/1bffd6e769f028193ef8c0bf983a2461db76dda0/2.docx')
-        .then(response => response.arrayBuffer())
-        .then(templateData => {
-          var zip = new JSZip();
-          zip.loadAsync(templateData)
-            .then(function(zip) {
-              return zip.file('word/document.xml').async('string');
-            })
-            .then(function(content) {
-              content = content.replace('{app1}', input1Value);
-              content = content.replace('{app2}', input2Value);
-
-              zip.file('word/document.xml', content);
-
-              return zip.generateAsync({type: 'blob'});
-            })
-            .then(function(updatedTemplate) {
-              var downloadLink = document.createElement('a');
-              downloadLink.href = URL.createObjectURL(updatedTemplate);
-              downloadLink.download = 'новий_документ.docx';
-              downloadLink.click();
-            });
-        })
-        .catch(error => {
-          console.error('Помилка при завантаженні файлу:', error);
-        });
-    }
-  </script>
-</body>
-</html>
-
+      fetch('https://raw.githubusercontent.com/Vlad-ivn/app.github.io/1bffd6e769f028193ef8c0bf983a2461db76dda0/2.docx')
         .then(response => response.arrayBuffer())
         .then(templateData => {
           var zip = new JSZip();
