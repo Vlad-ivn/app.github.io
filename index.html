@@ -8,17 +8,49 @@
 <body>
   <h1>Генератор документів</h1>
   <form id="dataForm">
-    <label for="app1">Значення для app1:</label>
-    <input type="text" id="app1" name="app1" required><br><br>
+    <label for="input1">Значення для input1:</label>
+    <input type="text" id="input1" name="input1" required><br><br>
 
-    <label for="app2">Значення для app2:</label>
-    <input type="text" id="app2" name="app2" required><br><br>
+    <label for="input2">Значення для input2:</label>
+    <input type="text" id="input2" name="input2" required><br><br>
 
-    <button type="submit">Створити документ</button>
+    <button type="button" onclick="generateDocument()">Створити документ</button>
   </form>
 
-  <!-- Додайте сюди скрипт для обробки форми та генерації документа -->
+  <!-- Додайте сюди скрипт для генерації документа -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
-  <script src="main.js"></script>
+  <script>
+    function generateDocument() {
+      var input1Value = document.getElementById('input1').value;
+      var input2Value = document.getElementById('input2').value;
+
+      fetch('шлях_до_шаблону_документа.docx')
+        .then(response => response.arrayBuffer())
+        .then(templateData => {
+          var zip = new JSZip();
+          zip.loadAsync(templateData)
+            .then(function(zip) {
+              return zip.file('word/document.xml').async('string');
+            })
+            .then(function(content) {
+              content = content.replace('{app1}', input1Value);
+              content = content.replace('{app2}', input2Value);
+
+              zip.file('word/document.xml', content);
+
+              return zip.generateAsync({type: 'blob'});
+            })
+            .then(function(updatedTemplate) {
+              var downloadLink = document.createElement('a');
+              downloadLink.href = URL.createObjectURL(updatedTemplate);
+              downloadLink.download = 'новий_документ.docx';
+              downloadLink.click();
+            });
+        })
+        .catch(error => {
+          console.error('Помилка при завантаженні файлу:', error);
+        });
+    }
+  </script>
 </body>
 </html>
