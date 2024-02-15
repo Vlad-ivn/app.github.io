@@ -24,7 +24,7 @@
       var input1Value = document.getElementById('input1').value;
       var input2Value = document.getElementById('input2').value;
 
-      fetch('шлях_до_шаблону_документа.docx')
+      fetch('https://raw.githubusercontent.com/Vlad-ivn/app.github.io/main/2.docx')
         .then(response => response.arrayBuffer())
         .then(templateData => {
           var zip = new JSZip();
