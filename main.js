@@ -1,4 +1,4 @@
-document.getElementById('dataForm').addEventListener('submit', function(event) {
+/*document.getElementById('dataForm').addEventListener('submit', function(event) {
   event.preventDefault(); // Перешкоджаємо відправленню форми за замовчуванням
 
   // Отримуємо значення з полів вводу
