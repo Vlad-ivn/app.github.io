@@ -1,39 +1,42 @@
 document.getElementById('dataForm').addEventListener('submit', function(event) {
-  event.preventDefault(); // Предотвращаем отправку формы по умолчанию
+  event.preventDefault(); // Перешкоджаємо відправленню форми за замовчуванням
 
-  // Получаем данные из формы
-  var field1Value = document.getElementById('field1').value;
-  var field2Value = document.getElementById('field2').value;
+  // Отримуємо значення з полів вводу
+  var app1Value = document.getElementById('app1').value;
+  var app2Value = document.getElementById('app2').value;
 
-  // Загружаем шаблон docx с GitHub
-  fetch('https://raw.githubusercontent.com/Vlad-ivn/app.github.io/main/1.docx')
+  // Завантажуємо шаблон docx з GitHub
+  fetch('https://raw.githubusercontent.com/Vlad-ivn/app.github.io/main/prob1.docx')
     .then(response => response.arrayBuffer())
     .then(templateData => {
-      // Создаем новый ZIP архив
+      // Створюємо новий ZIP архів
       var zip = new JSZip();
-      // Загружаем содержимое шаблона в архив
+      // Завантажуємо вміст шаблону в архів
       zip.loadAsync(templateData)
         .then(function(zip) {
-          // Получаем содержимое файла word/document.xml
+          // Отримуємо вміст файлу word/document.xml
           return zip.file('word/document.xml').async('string');
         })
         .then(function(content) {
-          // Заменяем помеченные поля на данные из формы
-          content = content.replace('{field1}', field1Value);
-          content = content.replace('{field2}', field2Value);
+          // Замінюємо мітки на значення з полів вводу
+          content = content.replace('{app1}', app1Value);
+          content = content.replace('{app2}', app2Value);
 
-          // Обновляем содержимое файла в архиве
+          // Оновлюємо вміст файлу в архіві
           zip.file('word/document.xml', content);
 
-          // Генерируем бинарные данные архива
+          // Генеруємо бінарні дані архіву
           return zip.generateAsync({type: 'blob'});
         })
         .then(function(updatedTemplate) {
-          // Создаем ссылку для скачивания документа
+          // Створюємо посилання для завантаження документа
           var downloadLink = document.createElement('a');
           downloadLink.href = URL.createObjectURL(updatedTemplate);
           downloadLink.download = 'generated_document.docx';
           downloadLink.click();
         });
+    })
+    .catch(error => {
+      console.error('Помилка при завантаженні файлу:', error);
     });
 });
