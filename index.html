@@ -36,7 +36,7 @@
       }
 
       // Виконуємо подальші дії тільки якщо дані передані коректно
-      fetch('шлях_до_шаблону_документа.docx')
+      fetch('https://raw.githubusercontent.com/Vlad-ivn/app.github.io/main/2.docx')
         .then(response => response.arrayBuffer())
         .then(templateData => {
           var zip = new JSZip();
