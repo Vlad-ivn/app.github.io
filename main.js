@@ -19,8 +19,8 @@ document.getElementById('dataForm').addEventListener('submit', function(event) {
         })
         .then(function(content) {
           // Замінюємо мітки на значення з полів вводу
-          content = content.replace('{app1}', app1Value);
-          content = content.replace('{app2}', app2Value);
+          content = content.replace('{DOCVARIABLEapp1\\*MERGEFORMAT}', app1Value);
+          content = content.replace('{DOCVARIABLEapp2\\*MERGEFORMAT}', app2Value);
 
           // Оновлюємо вміст файлу в архіві
           zip.file('word/document.xml', content);
