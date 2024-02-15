@@ -6,7 +6,7 @@ document.getElementById('dataForm').addEventListener('submit', function(event) {
   var field2Value = document.getElementById('field2').value;
 
   // Загружаем шаблон docx с GitHub
-  fetch('https://raw.githubusercontent.com/ваш_пользователь/ваш_репозиторий/main/template.docx')
+  fetch('https://raw.githubusercontent.com/Vlad-ivn/app.github.io/main/prob1.docx'')
     .then(response => response.arrayBuffer())
     .then(templateData => {
       // Создаем новый ZIP архив
