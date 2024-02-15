@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Генератор документа Word</title>
+  <title>Генератор документів</title>
 </head>
 <body>
-  <h1>Генератор документа Word</h1>
+  <h1>Генератор документів</h1>
   <form id="dataForm">
-    <label for="field1">Поле 1:</label>
-    <input type="text" id="field1" name="field1">
-    <br>
-    <label for="field2">Поле 2:</label>
-    <input type="text" id="field2" name="field2">
-    <br>
-    <button type="submit">Сгенерировать документ</button>
+    <label for="app1">Значення для app1:</label>
+    <input type="text" id="app1" name="app1" required><br><br>
+
+    <label for="app2">Значення для app2:</label>
+    <input type="text" id="app2" name="app2" required><br><br>
+
+    <button type="submit">Створити документ</button>
   </form>
+
+  <!-- Додайте сюди скрипт для обробки форми та генерації документа -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
   <script src="main.js"></script>
 </body>
