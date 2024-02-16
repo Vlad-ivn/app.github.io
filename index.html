@@ -19,42 +19,38 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
   <script>
-    function generateDocument() {
-      var input1Value = document.getElementById('input1').value;
-      var input2Value = document.getElementById('input2').value;
+  function generateDocument() {
+    var input1Value = document.getElementById('input1').value;
+    var input2Value = document.getElementById('input2').value;
 
-      if (input1Value.trim() === "" || input2Value.trim() === "") {
-        alert("Будь ласка, заповніть обидва поля вводу");
-        return;
-      }
-
-      fetch('https://github.com/Vlad-ivn/app.github.io/raw/dd404b9dbed1f1ea031f52298ffeedb0b73d1269/3.docx')
-        .then(response => response.arrayBuffer())
-        .then(templateData => {
-          var zip = new JSZip();
-          zip.loadAsync(templateData)
-            .then(function(zip) {
-              return zip.file('word/document.xml').async('string');
-            })
-            .then(function(content) {
-              content = content.replace('{app1}', input1Value);
-              content = content.replace('{app2}', input2Value);
-
-              zip.file('word/document.xml', content);
-
-              return zip.generateAsync({type: 'blob'});
-            })
-            .then(function(updatedTemplate) {
-              var downloadLink = document.createElement('a');
-              downloadLink.href = URL.createObjectURL(updatedTemplate);
-              downloadLink.download = 'новий_документ.docx';
-              downloadLink.click();
-            });
-        })
-        .catch(error => {
-          console.error('Помилка при завантаженні файлу:', error);
+    // Завантажте ваш шаблон docx з GitHub
+    fetch('https://github.com/Vlad-ivn/app.github.io/raw/dd404b9dbed1f1ea031f52298ffeedb0b73d1269/3.docx')
+      .then(response => response.arrayBuffer())
+      .then(templateData => {
+        var zip = new JSZip();
+        zip.loadAsync(templateData)
+          .then(function(zip) {
+            return zip.file('word/document.xml').async('string');
+          })
+          .then(function(content) {
+            // Замініть змінні у вмісті файлу document.xml
+            content = content.replace('{app1}', input1Value);
+            content = content.replace('{app2}', input2Value);
+            zip.file('word/document.xml', content);
+  
+            // Згенеруйте оновлений шаблон у форматі blob
+            return zip.generateAsync({type: 'blob'});
+          })
+          .then(function(updatedTemplate) {
+            // Створіть посилання для завантаження нового документа
+            var downloadLink = document.createElement('a');
+            downloadLink.href = URL.createObjectURL(updatedTemplate);
+            downloadLink.download = 'новий_документ.docx';
+            downloadLink.click();
         });
-    }
+    });
+}
+
   </script>
 </body>
 </html>
