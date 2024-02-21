@@ -17,43 +17,19 @@
     <button type="button" onclick="generateDocument()">Створити документ</button>
   </form>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
   <script>
   function generateDocument() {
     var input1Value = document.getElementById('input1').value;
     var input2Value = document.getElementById('input2').value;
 
-    // Завантажте ваш шаблон docx з GitHub
-
-    fetch('https://github.com/Vlad-ivn/app.github.io/raw/f904010fcd7ff086593215960c898e747b304188/4.docx')
+    fetch('/fetchDocument')
       .then(response => response.arrayBuffer())
       .then(templateData => {
-        var zip = new JSZip();
-        zip.loadAsync(templateData)
-          .then(function(zip) {
-            return zip.file('word/document.xml').async('string');
-          })
-          .then(function(content) {
-            // Замініть змінні у вмісті файлу document.xml
-            content = content.replace('{app1}', input1Value);
-            content = content.replace('{app2}', input2Value);
-            zip.file('word/document.xml', content);
-  
-            // Згенеруйте оновлений шаблон у форматі blob
-            return zip.generateAsync({type: 'blob'});
-          })
-          .then(function(updatedTemplate) {
-            // Створіть посилання для завантаження нового документа
-            var downloadLink = document.createElement('a');
-            downloadLink.href = URL.createObjectURL(updatedTemplate);
-            downloadLink.download = 'новий_документ.docx';
-            downloadLink.click();
-        });
-    });
-}
-
+        // ваш код обробки даних
+      })
+      .catch(error => console.error('Помилка при отриманні документа через проксі-сервер:', error));
+  }
   </script>
 </body>
 </html>
-
 
